@@ -4,10 +4,15 @@ document.addEventListener("DOMContentLoaded", () => {
   const notesContainer = document.getElementById("notesContainer");
   const undoModal = document.getElementById("undoModal");
   const undoBtn = document.getElementById("undoBtn");
-  const modalText = undoModal.querySelector("p"); // Modal text where countdown is shown
+  const darkModeToggle = document.getElementById("darkModeToggle");
 
   let currentNoteToDelete = null;
-  let countdownTimer = null; // To hold the countdown timer reference
+
+  // Check for saved theme preference in localStorage
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+  }
 
   // Add a new note
   addNoteBtn.addEventListener("click", () => {
@@ -18,6 +23,18 @@ document.addEventListener("DOMContentLoaded", () => {
       const noteElement = createNoteElement(noteText, timestamp);
       notesContainer.appendChild(noteElement);
       noteTextInput.value = ""; // Clear the input
+    }
+  });
+
+  // Toggle dark mode
+  darkModeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    // Save the theme preference in localStorage
+    if (document.body.classList.contains("dark-mode")) {
+      localStorage.setItem("theme", "dark");
+    } else {
+      localStorage.setItem("theme", "light");
     }
   });
 
@@ -57,37 +74,26 @@ document.addEventListener("DOMContentLoaded", () => {
     return note;
   }
 
-  // Show the undo modal with countdown
+  // Show the undo modal
   function showUndoModal(note) {
     currentNoteToDelete = note;
-    let countdown = 5; // Start countdown from 5 seconds
 
     undoModal.style.display = "flex"; // Show modal
 
-    // Update modal text with countdown every second
-    countdownTimer = setInterval(() => {
-      modalText.textContent = `This task will be deleted in ${countdown} seconds.`;
-      countdown--;
-
-      if (countdown < 0) {
-        clearInterval(countdownTimer); // Stop the countdown
-        if (currentNoteToDelete) {
-          currentNoteToDelete.remove(); // Remove note after countdown
-          undoModal.style.display = "none"; // Hide modal
-          currentNoteToDelete = null;
-        }
+    // Set a 5-second timer to delete the note
+    setTimeout(() => {
+      if (currentNoteToDelete) {
+        currentNoteToDelete.remove(); // Remove note after 5 seconds
+        undoModal.style.display = "none"; // Hide modal
+        currentNoteToDelete = null;
       }
-    }, 1000); // Update every second
+    }, 5000);
   }
 
   // Undo button click
   undoBtn.addEventListener("click", () => {
     if (currentNoteToDelete) {
-      clearInterval(countdownTimer); // Cancel the countdown
       undoModal.style.display = "none"; // Hide modal
-      currentNoteToDelete.setAttribute("data-state", "no"); // Reset the state back to "no"
-      const status = currentNoteToDelete.querySelector(".status");
-      status.textContent = "NO"; // Reset status text to "NO"
       currentNoteToDelete = null; // Cancel deletion
     }
   });
