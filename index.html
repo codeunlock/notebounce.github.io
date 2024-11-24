@@ -6,28 +6,71 @@
   <title>iOS Reminder Notes</title>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="notebounce_logo.png" type="image/x-icon">
+  <style>
+    /* Initially hide the main content */
+    #mainContent {
+      display: none;
+    }
+
+    /* Style for the login section */
+    #loginSection {
+      display: block;
+      text-align: center;
+      padding: 50px;
+    }
+  </style>
 </head>
 <body>
   
-  <button id="darkModeToggle">Toggle Dark Mode</button>
-
-  <div class="container">
-    <h1>📝NoteBounce</h1>
-    <div class="note-input">
-      <input type="text" id="noteText" placeholder="Enter your reminder...">
-      <button id="addNoteBtn">Add</button>
-    </div>
-    <div id="notesContainer" class="notes-container">
-      <!-- Notes will appear here -->
-    </div>
+  <!-- Login section -->
+  <div id="loginSection">
+    <h2>Login with Telegram</h2>
+    <!-- Telegram login button -->
+    <script async src="https://telegram.org/js/telegram-widget.js?22" 
+            data-telegram-login="YOUR_BOT_USERNAME" 
+            data-size="large" 
+            data-onauth="onTelegramAuth(user)" 
+            data-request-access="write"></script>
   </div>
-  <div id="undoModal" class="modal">
-    <div class="modal-content">
-      <p>This task will be deleted in 5 seconds.</p>
-      <button id="undoBtn">Undo</button>
+
+  <!-- Main content (hidden initially) -->
+  <div id="mainContent">
+    <button id="darkModeToggle">Toggle Dark Mode</button>
+
+    <div class="container">
+      <h1>📝NoteBounce</h1>
+      <div class="note-input">
+        <input type="text" id="noteText" placeholder="Enter your reminder...">
+        <button id="addNoteBtn">Add</button>
+      </div>
+      <div id="notesContainer" class="notes-container">
+        <!-- Notes will appear here -->
+      </div>
+    </div>
+    <div id="undoModal" class="modal">
+      <div class="modal-content">
+        <p>This task will be deleted in 5 seconds.</p>
+        <button id="undoBtn">Undo</button>
+      </div>
     </div>
   </div>
 
   <script src="script.js"></script>
+
+  <script>
+    // Telegram authentication callback
+    function onTelegramAuth(user) {
+      console.log(user);
+      // Hide the login section
+      document.getElementById("loginSection").style.display = "none";
+      
+      // Show the main content
+      document.getElementById("mainContent").style.display = "block";
+      
+      // Save user info (you can use it to associate tasks with the user)
+      localStorage.setItem("telegramUser", JSON.stringify(user));
+    }
+  </script>
+
 </body>
 </html>
