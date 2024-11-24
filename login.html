@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Telegram Login</title>
+  <title>Seamless Login with Telegram</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -20,7 +20,7 @@
     </script>
   </div>
 
-  <!-- Display User Information -->
+  <!-- User Information Display -->
   <div id="user-info" style="display:none;">
     <h2>Welcome, <span id="username"></span></h2>
     <p>User ID: <span id="user-id"></span></p>
@@ -30,25 +30,18 @@
   </div>
 
   <script type="text/javascript">
-    // This function will be triggered when the user successfully logs in with Telegram
+    // Function to handle Telegram authentication
     function onTelegramAuth(user) {
-      // Show the user's details after login
+      // Display user info once logged in
       document.getElementById('user-info').style.display = 'block';
       document.getElementById('username').textContent = user.first_name + ' ' + user.last_name;
       document.getElementById('user-id').textContent = user.id;
       document.getElementById('first-name').textContent = user.first_name;
       document.getElementById('last-name').textContent = user.last_name;
       document.getElementById('telegram-username').textContent = user.username || 'No username';
-      
-      // Store the user information in localStorage or send it to your server for saving tasks
-      localStorage.setItem('telegram_user', JSON.stringify(user));
 
-      // You can also call your backend API to save the user's information, for example:
-      // fetch('/save-user', {
-      //   method: 'POST',
-      //   body: JSON.stringify(user),
-      //   headers: { 'Content-Type': 'application/json' }
-      // });
+      // Store user data (example: saving to localStorage)
+      localStorage.setItem('telegram_user', JSON.stringify(user));
     }
   </script>
 
