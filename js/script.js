@@ -14,15 +14,21 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("dark-mode");
   }
 
+  // Load saved tasks from localStorage
+  loadTasksFromLocalStorage();
+
   // Add a new note
   addNoteBtn.addEventListener("click", () => {
     const noteText = noteTextInput.value.trim();
     const timestamp = new Date().toLocaleString();
 
     if (noteText) {
-      const noteElement = createNoteElement(noteText, timestamp);
+      const noteElement = createNoteElement(noteText, timestamp, "no");
       notesContainer.appendChild(noteElement);
       noteTextInput.value = ""; // Clear the input
+
+      // Save the new task to localStorage
+      saveTaskToLocalStorage(noteText, timestamp, "no");
     }
   });
 
@@ -39,17 +45,17 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Create a note element
-  function createNoteElement(text, timestamp) {
+  function createNoteElement(text, timestamp, state) {
     const note = document.createElement("div");
     note.className = "note";
-    note.setAttribute("data-state", "no"); // Default state is "No"
+    note.setAttribute("data-state", state); // Set task state (default is "no")
 
     const question = document.createElement("span");
     question.textContent = text;
 
     const status = document.createElement("div");
     status.className = "status";
-    status.textContent = "NO";
+    status.textContent = state === "no" ? "NO" : "YES";
 
     const time = document.createElement("div");
     time.className = "timestamp";
@@ -66,12 +72,43 @@ document.addEventListener("DOMContentLoaded", () => {
       note.setAttribute("data-state", newState);
       status.textContent = newState === "no" ? "NO" : "YES";
 
+      // Update the task state in localStorage
+      updateTaskStateInLocalStorage(note, newState);
+
       if (newState === "yes") {
         showUndoModal(note);
       }
     });
 
     return note;
+  }
+
+  // Load saved tasks from localStorage and display them
+  function loadTasksFromLocalStorage() {
+    const savedTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    savedTasks.forEach(task => {
+      const taskElement = createNoteElement(task.text, task.timestamp, task.state);
+      notesContainer.appendChild(taskElement);
+    });
+  }
+
+  // Save the task to localStorage
+  function saveTaskToLocalStorage(text, timestamp, state) {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    tasks.push({ text, timestamp, state });
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }
+
+  // Update task state in localStorage
+  function updateTaskStateInLocalStorage(note, newState) {
+    const tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+    const taskIndex = tasks.findIndex(task => task.text === note.querySelector("span").textContent);
+    
+    if (taskIndex > -1) {
+      tasks[taskIndex].state = newState;
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
   }
 
   // Show the undo modal
