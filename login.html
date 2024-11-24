@@ -1,63 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Seamless Login with Telegram</title>
-  <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seamless Telegram Login</title>
 </head>
 <body>
-
-  <h1>Login with Telegram</h1>
-
-  <!-- Telegram Login Button -->
-  <div id="telegram-button">
-    <script async src="https://telegram.org/js/telegram-widget.js?7"
-      data-telegram-login="NoteBounce_bot" 
-      data-size="large" 
-      data-radius="10" 
-      data-request-access="write"
-      data-auth-url="https://codeunlock.github.io/notebounce.github.io/login">
-    </script>
-  </div>
-
-  <!-- User Information Display -->
-  <div id="user-info" style="display:none;">
-    <h2>Welcome, <span id="username"></span></h2>
-    <p>User ID: <span id="user-id"></span></p>
-    <p>First Name: <span id="first-name"></span></p>
-    <p>Last Name: <span id="last-name"></span></p>
-    <p>Username: <span id="telegram-username"></span></p>
-  </div>
-
-  <script type="text/javascript">
-    // Check for user data in localStorage on page load
-    document.addEventListener('DOMContentLoaded', () => {
-      const savedUser = localStorage.getItem('telegram_user');
-      if (savedUser) {
-        const user = JSON.parse(savedUser);
-        displayUserInfo(user);
-      }
-    });
-
-    // Function to display user information
-    function displayUserInfo(user) {
-      document.getElementById('user-info').style.display = 'block';
-      document.getElementById('username').textContent = user.first_name + ' ' + (user.last_name || '');
-      document.getElementById('user-id').textContent = user.id;
-      document.getElementById('first-name').textContent = user.first_name;
-      document.getElementById('last-name').textContent = user.last_name || 'N/A';
-      document.getElementById('telegram-username').textContent = user.username || 'No username';
-    }
-
-    // Function to handle Telegram authentication
-    function onTelegramAuth(user) {
-      displayUserInfo(user);
-
-      // Store user data (example: saving to localStorage)
-      localStorage.setItem('telegram_user', JSON.stringify(user));
-    }
-  </script>
-
+    <h1>Welcome to Seamless Telegram Login</h1>
+    <p>Click the login button sent to your Telegram account to continue.</p>
 </body>
 </html>
