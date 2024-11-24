@@ -1,0 +1,184 @@
+/* General Reset */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Container */
+.container {
+  max-width: 400px;
+  width: 100%;
+  margin: 20px;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+/* Title */
+h1 {
+  font-size: 2em;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #007aff;
+}
+
+/* Input Section */
+.note-input {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.note-input input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #d1d1d6;
+  border-radius: 12px;
+  font-size: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  outline: none;
+  transition: all 0.3s;
+}
+
+.note-input input:focus {
+  border-color: #007aff;
+  box-shadow: 0 0 6px rgba(0, 122, 255, 0.5);
+}
+
+.note-input button {
+  padding: 12px 20px;
+  font-size: 16px;
+  background: #007aff;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.note-input button:hover {
+  background: #005ec2;
+  box-shadow: 0 4px 6px rgba(0, 94, 194, 0.3);
+}
+
+.note-input button:active {
+  transform: scale(0.95);
+}
+
+/* Notes Grid */
+.notes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: center;
+}
+
+/* Note Box */
+.note {
+  width: 160px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  cursor: pointer;
+  text-align: center;
+}
+
+.note span {
+  font-size: 1em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.note .status {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.note[data-state="no"] .status {
+  color: #ff3b30;
+}
+
+.note[data-state="yes"] .status {
+  color: #34c759;
+}
+
+.note:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.note:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Bounce Animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+.note[data-state="yes"] {
+  animation: bounce 0.5s ease-in-out infinite;
+}
+
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 300px;
+}
+
+.modal button {
+  background-color: #007aff;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal button:hover {
+  background-color: #005ec2;
+}

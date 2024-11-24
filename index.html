@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iOS Reminder Notes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>📝NoteBounce</h1>
+    <div class="note-input">
+      <input type="text" id="noteText" placeholder="Enter your reminder...">
+      <button id="addNoteBtn">Add</button>
+    </div>
+    <div id="notesContainer" class="notes-container">
+      <!-- Notes will appear here -->
+    </div>
+  </div>
+  <div id="undoModal" class="modal">
+    <div class="modal-content">
+      <p>This task will be deleted in 5 seconds.</p>
+      <button id="undoBtn">Undo</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
