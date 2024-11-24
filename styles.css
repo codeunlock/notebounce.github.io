@@ -85,8 +85,8 @@ h1 {
 
 /* Note Box */
 .note {
-  width: 160px;
-  height: 160px;
+  width: 90px;
+  height: 90px;
   display: flex;
   flex-direction: column;
   justify-content: center;
