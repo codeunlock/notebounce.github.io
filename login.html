@@ -16,7 +16,8 @@
       data-telegram-login="NoteBounce_bot" 
       data-size="large" 
       data-radius="10" 
-      data-request-access="write">
+      data-request-access="write"
+      data-auth-url="https://codeunlock.github.io/notebounce.github.io/login">
     </script>
   </div>
 
@@ -30,15 +31,28 @@
   </div>
 
   <script type="text/javascript">
-    // Function to handle Telegram authentication
-    function onTelegramAuth(user) {
-      // Display user info once logged in
+    // Check for user data in localStorage on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedUser = localStorage.getItem('telegram_user');
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        displayUserInfo(user);
+      }
+    });
+
+    // Function to display user information
+    function displayUserInfo(user) {
       document.getElementById('user-info').style.display = 'block';
-      document.getElementById('username').textContent = user.first_name + ' ' + user.last_name;
+      document.getElementById('username').textContent = user.first_name + ' ' + (user.last_name || '');
       document.getElementById('user-id').textContent = user.id;
       document.getElementById('first-name').textContent = user.first_name;
-      document.getElementById('last-name').textContent = user.last_name;
+      document.getElementById('last-name').textContent = user.last_name || 'N/A';
       document.getElementById('telegram-username').textContent = user.username || 'No username';
+    }
+
+    // Function to handle Telegram authentication
+    function onTelegramAuth(user) {
+      displayUserInfo(user);
 
       // Store user data (example: saving to localStorage)
       localStorage.setItem('telegram_user', JSON.stringify(user));
