@@ -94,6 +94,10 @@ document.addEventListener("DOMContentLoaded", () => {
   undoBtn.addEventListener("click", () => {
     if (currentNoteToDelete) {
       undoModal.style.display = "none"; // Hide modal
+      currentNoteToDelete.setAttribute("data-state", "no"); // Reset state to "no"
+      const status = currentNoteToDelete.querySelector(".status");
+      status.textContent = "NO"; // Reset text to "NO"
+      currentNoteToDelete.classList.remove("bouncing"); // Remove bouncing class if exists
       currentNoteToDelete = null; // Cancel deletion
     }
   });
